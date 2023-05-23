@@ -31,7 +31,7 @@ pytest==6.2.1
 pytz==2020.5
 PyYAML==5.4.1
 repoze.lru==0.7
-requests==2.25.1
+requests==2.31.0
 six==1.15.0
 soupsieve==2.1
 toml==0.10.2
