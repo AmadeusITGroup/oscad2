@@ -20,7 +20,7 @@ pluggy==0.13.1
 py==1.10.0
 pycodestyle==2.6.0
 pyflakes==2.2.0
-Pygments==2.7.4
+Pygments==2.15.0
 pyparsing==2.4.7
 pyramid==1.10.5
 pyramid-debugtoolbar==4.9
