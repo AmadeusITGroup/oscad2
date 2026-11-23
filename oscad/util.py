@@ -1,6 +1,6 @@
 from markupsafe import Markup
-from pkg_resources import resource_isdir
 from pyramid.exceptions import ConfigurationError
+from pyramid.path import AssetResolver
 
 from .exceptions import UtilException
 from .compat import urlparse
@@ -48,7 +48,7 @@ def load_themes(config, settings):
         config.override_asset('oscad:static/', '%s:static/' % theme)
         config.override_asset('oscad:assets/', '%s:assets/' % theme)
 
-        if resource_isdir(theme, 'locale'):
+        if AssetResolver(theme).resolve('locale').isdir():
             config.add_translation_dirs('%s:locale' % theme)
 
         try:

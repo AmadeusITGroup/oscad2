@@ -1,10 +1,13 @@
-from pkg_resources import resource_stream, resource_string
+from importlib.resources import files
 
 import yaml
 
+_data = files(__name__) / 'data'
+
 
 def load_data(name):
-    return load_file(resource_stream(__name__, 'data/%s.yml' % name))
+    with (_data / ('%s.yml' % name)).open('rb') as f:
+        return load_file(f)
 
 
 def load_file(fileobj):
@@ -36,9 +39,10 @@ valid_licenses = sorted(licenses.keys())
 
 valid_inputs['license'] = valid_licenses
 
-for id, details in license_details.items():
-    details['text'] = resource_string(
-        __name__, 'data/texts/{}.txt'.format(id)).decode('utf-8')
+for details in license_details.values():
+    details['text'] = (
+        _data / 'texts' / '{}.txt'.format(details['licensedb_id'])
+    ).read_text(encoding='utf-8')
 
 
 # generate from sources
@@ -90,7 +94,7 @@ def license_matrix():
          None, ('binaries', 1), ('any', 1), '08B'),
 
         (None, None, ('embedded', 4),
-         ('4yourself', 2), ('any', 2), ('onlyLocally', 1), '09s'),
+         ('4yourself', 2), ('any', 2), ('onlyLocally', 1), '09L'),
 
         (None, None, None, None, None,
          ('viaInternet', 1), '09N'),

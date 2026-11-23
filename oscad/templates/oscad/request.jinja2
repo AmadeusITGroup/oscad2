@@ -10,9 +10,9 @@
   </td>
   <td>
     {%- for choice in choices -%}
-    <div class="radio">
-      <label>
-        <input type="radio" name="{{ id }}" value="{{ choice[0] }}"
+    <div class="form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="{{ id }}" value="{{ choice[0] }}"
         {% if choice[1] %}checked{% endif %} />
         {{ choice[0] }}
       </label>
@@ -24,7 +24,9 @@
 
 {%- block request -%}
   <form action="{{ request.route_path('result') }}" method="POST">
-    <table class="table">
+    <div class="table-responsive" role="region" tabindex="0"
+         aria-label="{{ _('Question') }}">
+      <table class="table">
       <thead>
         <tr>
           <th>{{ _('Focus') }}</th>
@@ -70,7 +72,9 @@
         an os library [embedded], does this program consume or produce data {only locally} or {via internet}?
         {%- endtrans -%}
         {%- endcall -%}
+      </tbody>
       </table>
+    </div>
       <table class="table">
         <thead>
         <tr>
@@ -82,14 +86,16 @@
           </td>
           <td></td>
         </tr>
+        </thead>
+        <tbody>
         <tr class="multicolumn-cell">
           <td>{{ _('known') }}</td>
           <td>
             <ul>
               {%- for license in licenses -%}
-              <li class="radio">
-                <label>
-                  <input type="radio" name="license"
+              <li class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="license"
                          value="{{ license }}"
                          {%- if license == default_license
                          %} checked="checked" {%- endif %}
@@ -107,9 +113,9 @@
           <td>
             <ul>
               {%- for license in planned_licenses -%}
-              <li class="radio">
-                <label>
-                  <input type="radio" name="license" disabled="disabled" />
+              <li class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="license" disabled="disabled" />
                   {{ license_link(license) }}
                 </label>
               </li>

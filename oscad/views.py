@@ -3,8 +3,8 @@ from datetime import timedelta
 from babel import Locale
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPSeeOther, HTTPNotFound, HTTPForbidden
+from pyramid.path import AssetResolver
 from pyramid.response import Response
-from pkg_resources import resource_stream
 
 import oscad_data as data
 
@@ -82,7 +82,6 @@ def reset(request):
 
 
 def show_error(request, message):
-    print(request.wants_json)
     if request.wants_json:
         return {
             'ok': False,
@@ -251,10 +250,10 @@ def translation_file(request):
 
     gettext_file = 'locale/{0}/LC_MESSAGES/oscad.po'.format(lang)
 
-    try:
-        file_stream = resource_stream('oscad', gettext_file)
-    except IOError:
+    asset = AssetResolver('oscad').resolve(gettext_file)
+    if not asset.exists():
         return HTTPNotFound()
+    file_stream = asset.stream()
 
     resp = Response()
 
@@ -269,7 +268,7 @@ def translation_file(request):
 def translation_template(request):
     resp = Response()
     resp.content_disposition = 'attachment; filename=oscad.pot'
-    resp.app_iter = resource_stream('oscad', 'locale/oscad.pot')
+    resp.app_iter = AssetResolver('oscad').resolve('locale/oscad.pot').stream()
     # otherwise Firefox thinks its a PowerPoint
     resp.content_type = 'text/plain'
     return resp
@@ -282,7 +281,7 @@ def missing_parameter(exc, request):
         request.translate('Missing parameter: %(param)s', param=exc.param))
 
 
-@view_config(context=exceptions.InvalidParameterCombination)
+@view_config(context=exceptions.InvalidParameterCombination, renderer='')
 def invalid_parameters(exc, request):
     return show_error(
         request,
@@ -290,7 +289,7 @@ def invalid_parameters(exc, request):
                           ' invalid'))
 
 
-@view_config(context=exceptions.InvalidLicense)
+@view_config(context=exceptions.InvalidLicense, renderer='')
 def invalid_license(exc, request):
     return show_error(
         request,

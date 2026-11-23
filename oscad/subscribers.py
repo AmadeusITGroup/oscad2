@@ -1,5 +1,5 @@
 from pyramid.i18n import default_locale_negotiator
-from pkg_resources import resource_exists
+from pyramid.path import AssetResolver
 
 
 import logging
@@ -22,7 +22,9 @@ def add_renderer_globals(event):
     ]
 
     # FIXME get template name from actual route/view
-    if resource_exists('oscad', 'templates/oscad/imprint.jinja2'):
+    # AssetResolver honours asset overrides registered by themes.
+    if AssetResolver('oscad').resolve(
+            'templates/oscad/imprint.jinja2').exists():
         toplevel_links.insert(-1,
                               (request.route_path('imprint'),
                                request.translate('Imprint')))

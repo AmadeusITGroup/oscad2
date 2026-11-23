@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.12', '3.13', '3.14']
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: dev-requirements.txt
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r dev-requirements.txt
+          pip install -e ".[serve,test,lint]"
+          pip check
+      - name: Lint
+        run: flake8
+      - name: Test
+        run: pytest
+      - name: Build distributions
+        run: |
+          pip install build
+          python -m build
+      - name: Check wheel contents
+        run: |
+          python - <<'PY'
+          import glob, tarfile, zipfile
+          names = zipfile.ZipFile(glob.glob('dist/*.whl')[0]).namelist()
+          required = [
+              'oscad/static/css/bootstrap.css',
+              'oscad/static/css/main.css',
+              'oscad/static/css/theme.css',
+              'oscad/static/bootstrap/js/bootstrap.bundle.min.js',
+              'oscad/templates/oscad/base.jinja2',
+              'oscad/locale/de/LC_MESSAGES/oscad.mo',
+              'oscad_data/data/licenses.yml',
+              'oscad_data/data/texts/Zlib.txt',
+              'oscad_theme_basic/static/css/bootstrap.css',
+              'oscad_theme_amadeus/static/css/bootstrap.css',
+          ]
+          missing = [n for n in required if n not in names]
+          assert not missing, missing
+          with tarfile.open(glob.glob('dist/*.tar.gz')[0]) as archive:
+              names = archive.getnames()
+              required = ['package.json', 'package-lock.json',
+                          'scripts/build-assets.mjs', 'babel.cfg',
+                          'production.ini', 'wsgi.py']
+              missing = [n for n in required
+                         if not any(path.endswith('/' + n) for path in names)]
+              assert not missing, missing
+          PY
+
+  assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check compiled assets are up to date
+        run: npm run check

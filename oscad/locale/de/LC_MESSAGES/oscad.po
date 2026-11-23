@@ -38,6 +38,18 @@ msgstr "Über"
 msgid "Components"
 msgstr "Komponenten"
 
+#: oscad/templates/oscad/components.jinja2
+msgid "Icons"
+msgstr "Symbole"
+
+#: oscad/templates/oscad/navigation.jinja2
+msgid "Main navigation"
+msgstr "Hauptnavigation"
+
+#: oscad/templates/oscad/navigation.jinja2
+msgid "Toggle navigation"
+msgstr "Navigation ein- oder ausblenden"
+
 #: oscad/subscribers.py:21
 msgid "Help"
 msgstr "Hilfe"

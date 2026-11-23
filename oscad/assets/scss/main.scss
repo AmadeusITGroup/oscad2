@@ -1,18 +1,14 @@
-@import "bootstrap/variables";
-
 .navbar-brand img {
-    height: 20px;
+  height: 20px;
 }
 
 .disclaimer {
   margin-top: 3ex;
 }
 
-.panel .panel-body, p {
+.card .card-body, p {
   text-align: justify;
   hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
 }
 
 .result-answer-label {
@@ -24,36 +20,33 @@ tr td:last-child .btn {
 }
 
 .multicolumn-cell {
-  ul:first-child {
-    margin-top: 0;
-  }
-
-  .radio {
-    margin-bottom: 0;
-    margin-top: 0;
-    min-height: 0;
-  }
-
   ul {
-    -moz-column-width: 9em;
-    -webkit-column-width: 9em;
     column-width: 9em;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
 
     li {
       display: inline-block;
+      margin-right: 1em;
     }
+  }
+
+  .form-check {
+    margin-bottom: 0;
   }
 }
 
-a.help-link  {
+a.help-link {
   color: #333;
 
-  &:hover .glyphicon-question-sign {
-      opacity: 1;
+  &:hover .help-icon {
+    opacity: 1;
   }
 
-  .glyphicon-question-sign {
-      opacity: 0.3;
+  .help-icon {
+    opacity: 0.3;
+    vertical-align: -0.125em;
   }
 }
 
@@ -62,27 +55,25 @@ a.help-link  {
 
   figure {
     display: inline-block;
-    margin-left:15px;
+    margin-left: 15px;
     margin-right: 15px;
   }
 }
 
 .headerbar-second {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 
   div {
-    margin-bottom: 0px;
-  }
-
-  &.navbar-fixed-top {
-    top: 50px;
+    margin-bottom: 0;
   }
 }
 
-@media (min-width: $screen-sm-max) {
-  .inline.hidden-sm.hidden-xs {
-    display: inline !important;
-  }
+// Help anchors: keep targets visible below the sticky header bar.
+.navbar-anchor-correction {
+  display: block;
+  position: relative;
+  top: -80px;
+  visibility: hidden;
 }
 
 pre.license-raw {

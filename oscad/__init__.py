@@ -1,6 +1,9 @@
 from collections import namedtuple
+import logging
+import os
 
 from pyramid.config import Configurator
+from pyramid.exceptions import ConfigurationError
 from pyramid.session import SignedCookieSessionFactory, JSONSerializer
 from pyramid.settings import asbool
 
@@ -8,10 +11,14 @@ import jinja2
 
 from .subscribers import locale_negotiator
 from .util import load_themes, htmlize
-from ._scss import ScssRenderer
 from . import version
 
 __version__ = version.__version__
+
+logger = logging.getLogger(__name__)
+
+SESSION_SECRET_ENV = 'OSCAD_SESSION_SECRET'
+REMOVED_SETTINGS = ('scss.asset_path', 'jquery_location')
 
 
 class OscadSettings(object):
@@ -72,7 +79,23 @@ def set_toplevel_links(config, links):
 
 
 def scss_path(request, name, **kwargs):
-    return request.route_path('scss', css_path=name, **kwargs)
+    """Return the URL path of a stylesheet compiled from ``assets/scss``.
+
+    Stylesheets are precompiled at build time
+    (see ``scripts/build-assets.mjs``) and served from ``static/css``;
+    themes override them via asset overrides.
+    """
+    return request.static_path('oscad:static/css/%s.css' % name, **kwargs)
+
+
+def session_secret_from_settings(settings):
+    secret = settings.get('session.secret') or os.environ.get(
+        SESSION_SECRET_ENV)
+    if not secret or not secret.strip():
+        raise ConfigurationError(
+            'No session secret configured: set "session.secret" in the ini '
+            'file or the %s environment variable' % SESSION_SECRET_ENV)
+    return secret
 
 
 def oslic_chapter_url(request, location):
@@ -115,11 +138,14 @@ def main(global_config, **settings):
     config.add_request_method(piwik, property=True)
     config.add_request_method(oslic_chapter_url)
 
-    config.add_renderer('scss', ScssRenderer)
+    for name in REMOVED_SETTINGS:
+        if name in settings:
+            logger.warning('Setting "%s" is no longer used and is ignored',
+                           name)
 
     config.set_locale_negotiator(locale_negotiator)
     config.set_session_factory(SignedCookieSessionFactory(
-        '',
+        session_secret_from_settings(settings),
         httponly=True,
         serializer=JSONSerializer()))
     config.add_subscriber('oscad.subscribers.add_renderer_globals',
@@ -128,15 +154,13 @@ def main(global_config, **settings):
                           'pyramid.events.NewRequest')
     config.add_translation_dirs('oscad:locale')
 
-    config.add_route('scss', static_prefix + '/css/{css_path:.*}.css')
-    config.add_static_view(static_prefix, 'static', cache_max_age=3600)
-
+    # Registered before the generic static view so that URLs for Bootstrap's
+    # JavaScript honour ``bootstrap_location`` (e.g. a CDN mirroring the
+    # layout of Bootstrap's ``dist/`` directory).
     config.add_static_view(
         settings.get('bootstrap_location', static_prefix + '/bootstrap'),
-        'bootstrap')
-    config.add_static_view(
-        settings.get('jquery_location', static_prefix + '/jquery'),
-        'jquery')
+        'oscad:static/bootstrap/', cache_max_age=3600)
+    config.add_static_view(static_prefix, 'static', cache_max_age=3600)
 
     config.registry.settings['oscad_settings'] = oscad_default_settings
     config.registry.settings['piwik'] = piwik_from_settings(settings)

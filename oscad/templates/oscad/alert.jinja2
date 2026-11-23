@@ -1,6 +1,6 @@
-<nav class="navbar navbar-fixed-top navbar-headerbar headerbar-second">
+<div class="headerbar-second">
   {%- block alert -%}
-  <div class="alert alert-danger">
+  <div class="alert alert-danger rounded-0">
     <div class="container text-center">
       <strong>Warning!</strong>
       This software is for testing and demonstration purpuses <strong>only</strong>.
@@ -9,8 +9,4 @@
     </div>
   </div>
   {%- endblock -%}
-</nav>
-<nav class="navbar navbar-headerbar headerbar-second">
-  {{ self.alert() }}
-  </div>
-</nav>
+</div>

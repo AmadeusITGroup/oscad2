@@ -1,0 +1,2 @@
+include babel.cfg development.ini production.ini wsgi.py
+include package.json package-lock.json scripts/build-assets.mjs

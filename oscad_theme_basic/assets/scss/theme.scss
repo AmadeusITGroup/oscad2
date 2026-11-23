@@ -15,6 +15,7 @@
 .theme.navbar {
   margin-bottom: 1px;
   background-color: #FFFFFF;
+  border-style: solid;
   border-width: 0 0 4px 0;
   border-color: #005EBB;
 }
@@ -25,9 +26,7 @@
 }
 
 .navbar-brands {
-  margin: auto;
-  width: 500px;
-
+  justify-content: center;
   padding-top: 5px;
   padding-bottom: 5px;
 
@@ -37,18 +36,36 @@
   }
 }
 
-.headerbar-second.navbar-fixed-top {
-  top: 53px;
-}
-
 hr {
   &.vertical {
-    width: 0px;
-    height: 100%;
-    display: inline;
+    width: 0;
+    height: 40px;
+    margin: 0 10px;
+    opacity: 1;
+    border-top: 0;
   }
 
   &.brand-separator {
     border-left: 1px solid rgb(215, 210, 203);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .theme img.logo-amadeus {
+    height: 15px;
+  }
+
+  .theme img.logo-telekom {
+    height: 20px;
+  }
+
+  .navbar-brands a {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  hr.vertical {
+    height: 20px;
+    margin: 0 5px;
   }
 }
