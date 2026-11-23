@@ -1,0 +1,19 @@
+{
+  "name": "oscad-assets",
+  "private": true,
+  "description": "Build-time frontend toolchain for OSCAd (compiles theme SCSS to packaged CSS). Not needed at runtime.",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "build": "node scripts/build-assets.mjs",
+    "check": "node scripts/build-assets.mjs --check"
+  },
+  "devDependencies": {
+    "bootstrap": "5.3.9",
+    "bootstrap-icons": "1.13.2",
+    "sass": "1.108.2"
+  }
+}

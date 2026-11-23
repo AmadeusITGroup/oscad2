@@ -31,21 +31,18 @@
   {{ component('Jinja2', 'http://jinja.pocoo.org/',
                _('Templating for the Web Application'), 'BSD',
                'https://raw.github.com/mitsuhiko/jinja2/master/LICENSE') }}
-  {{ component('pyScss', 'http://pyscss.readthedocs.org/en/latest/',
-               _('Dynamic creation of CSS Stylesheets'), 'MIT',
-               'https://raw.github.com/Kronuz/pyScss/master/LICENSE') }}
   {{ component('Babel', 'http://babel.pocoo.org',
                _('Translation support and workflow'), 'BSD',
                'http://babel.pocoo.org/docs/license/') }}
 {% endcall %}
 
 {% call section(_('Embedded Components')) %}
-  {{ component('jQuery', 'http://jquery.com/',
-               _('Javascript utilities'), 'MIT',
-               'https://github.com/jquery/jquery/raw/master/MIT-LICENSE.txt') }}
-  {{ component('sass-bootstrap', 'https://github.com/jlong/sass-bootstrap',
-               _('Base CSS Stylesheets'), 'Apache 2',
-               'https://github.com/jlong/sass-bootstrap/raw/0c9ad8f0a09783c18f57e30de499fcf0d0fcff56/LICENSE') }}
+  {{ component('Bootstrap', 'https://getbootstrap.com/',
+               _('Base CSS Stylesheets'), 'MIT',
+               'https://github.com/twbs/bootstrap/blob/main/LICENSE') }}
+  {{ component('Bootstrap Icons', 'https://icons.getbootstrap.com/',
+               _('Icons'), 'MIT',
+               'https://github.com/twbs/icons/blob/main/LICENSE') }}
 {% endcall %}
 </table>
 </tbody>

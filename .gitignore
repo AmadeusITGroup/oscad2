@@ -10,3 +10,6 @@ develop-eggs/
 .coverage
 .installed.cfg
 venv/
+.venv/
+node_modules/
+htmlcov/

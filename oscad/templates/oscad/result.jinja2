@@ -5,7 +5,7 @@
 {%- endmacro %}
 
 {% block content %}
-<div class="page-header">
+<div class="pb-2 mb-4 border-bottom">
   <h1>
     <span class="text-primary">O</span>pen
     <span class="text-primary">S</span>ource
@@ -15,10 +15,10 @@
   </h1>
 </div>
 <div class="row">
-  <div class="col-md-offset-1 col-md-2 result-answer-label">
+  <div class="offset-lg-1 col-lg-2 result-answer-label">
     {{ _('Request:') }}
   </div>
-  <div class="col-md-8">
+  <div class="col-lg-8">
     <p>
       {# FIXME class=text-primary on placeholders #}
       {%- filter htmlize -%}
@@ -41,12 +41,12 @@
 </div>
 <hr />
 <div class="row">
-  <div class="col-md-offset-1 col-md-2 result-answer-label">
+  <div class="offset-lg-1 col-lg-2 result-answer-label">
     <p>
     {{ osuc.name }}:
     </p>
   </div>
-  <div class="col-md-8">
+  <div class="col-lg-8">
     <p>
       {{ osuc.description }}
     </p>
@@ -54,21 +54,21 @@
 </div>
 <hr />
 <div class="row">
-  <div class="col-md-offset-1 col-md-2 result-answer-label">
+  <div class="offset-lg-1 col-lg-2 result-answer-label">
     {%- trans lsuc_name=lsuc.name -%}
     connotes w.r.t. {{ lsuc_name }}:
     {%- endtrans -%}
   </div>
-  <div class="col-md-8">
+  <div class="col-lg-8">
     <p>{{ lsuc.description|safe }}</p>
   </div>
 </div>
 <hr />
 <div class="row">
-  <div class="col-md-offset-1 col-md-2 result-answer-label">
+  <div class="offset-lg-1 col-lg-2 result-answer-label">
     <b>{{ _('requires:') }}</b>
   </div>
-  <div class="col-md-8">
+  <div class="col-lg-8">
     <b>{{ lsuc.requirements.req_prefix }} </b>
     <p>{{ lsuc.requirements.notasks }}</p>
 
@@ -97,10 +97,10 @@
 </div>
 <hr />
 <div class="row">
-  <div class="col-md-offset-1 col-md-2 result-answer-label">
+  <div class="offset-lg-1 col-lg-2 result-answer-label">
     <b>{{ _('forbids:') }}</b>
   </div>
-  <div class="col-md-8">
+  <div class="col-lg-8">
     <p>{{ lsuc.requirements.forbids_prefix }}</p>
     {%- if lsuc.requirements.forbids_array -%}
     <ul>
@@ -118,9 +118,9 @@
 </div>
 {% endif %}
 <div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
+  <div class="col-lg-12">
+    <div class="card mb-3">
+      <div class="card-body">
         {%- trans lsuc_license_name=lsuc.license_info.name, osuc_name=osuc.name,
                   lsuc_oslic_todo=oslic_chapter_link(lsuc.oslic_info.todo),
                   lsuc_oslic_lsuc=oslic_chapter_link(lsuc.oslic_info.lsuc),
@@ -144,7 +144,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-lg-12">
     {%- include 'disclaimer.jinja2' -%}
   </div>
 </div>

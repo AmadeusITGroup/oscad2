@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=84.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oscad"
+dynamic = ["version"]
+description = "Open Source Compliance Advisor"
+readme = "README.rst"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE", "LICENSE_*", "NOTICE"]
+authors = [
+    { name = "Thomas Weißschuh, Amadeus IT Group", email = "thomas.weissschuh@de.amadeus.com" },
+]
+keywords = ["web", "pyramid", "open source", "compliance"]
+classifiers = [
+    "Framework :: Pyramid",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+]
+requires-python = ">=3.12,<3.15"
+dependencies = [
+    "Babel>=2.17",
+    "Jinja2>=3.1.6",
+    "MarkupSafe>=3",
+    "pyramid>=2.1",
+    "pyramid_jinja2>=2.10.1",
+    "PyYAML>=6.0.2",
+    "WebOb>=1.8.11",
+]
+
+[project.optional-dependencies]
+serve = ["waitress>=3.0.2"]
+test = ["pytest>=8", "WebTest>=3.0.7"]
+lint = ["flake8>=7"]
+translate = ["translate-toolkit"]
+
+[project.urls]
+Homepage = "https://github.com/AmadeusITGroup/oscad2"
+
+[project.entry-points."paste.app_factory"]
+main = "oscad:main"
+
+[project.entry-points."babel.extractors"]
+oscad_lsuc = "oscad_data.extractors:extract_lsuc"
+oscad_osuc = "oscad_data.extractors:extract_osuc"
+oscad_parameters = "oscad_data.extractors:extract_parameters"
+
+[tool.setuptools]
+packages = ["oscad", "oscad_data", "oscad_i18n", "oscad_theme_basic", "oscad_theme_amadeus"]
+
+[tool.setuptools.dynamic]
+version = { attr = "oscad.version.__version__" }
+
+[tool.setuptools.package-data]
+"*" = [
+    "static/agpl-3.0.txt",
+    "static/bootstrap/js/*.js",
+    "static/bootstrap/js/*.map",
+    "static/css/*.css",
+    "static/img/*.png",
+    "static/img/*.svg",
+    "assets/scss/*.scss",
+    "assets/scss/defaults/*.scss",
+    "templates/*.jinja2",
+    "templates/*/*.jinja2",
+    "locale/*.pot",
+    "locale/*/LC_MESSAGES/*.po",
+    "locale/*/LC_MESSAGES/*.mo",
+]
+oscad_data = ["data/*.yml", "data/texts/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["oscad", "oscad_data", "oscad_i18n"]
+
+[tool.coverage.report]
+show_missing = true

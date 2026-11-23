@@ -1,31 +1,33 @@
 {%- extends 'base.jinja2' -%}
+{%- from 'icons.jinja2' import question_circle -%}
 
 {%- macro help_link(topic, text) -%}
 <a href="{{ request.route_path('help', _anchor=topic) }}" class="help-link">
   {{ text }}
-  <span class="glyphicon glyphicon-question-sign hidden-xs hidden-sm inline"></span>
+  {{ question_circle() }}
 </a>
 {%- endmacro -%}
 
 {%- macro license_link(id) -%}
 <span
-  data-toggle="tooltip"
+  data-bs-toggle="tooltip"
   title="{{ license_details[id].name }}">
   {{ id }}
-  <a href="{{ request.route_path('license', license=id) }}" class="help-link" >
-    <span class="glyphicon glyphicon-question-sign hidden-xs hidden-sm inline"></span>
+  <a href="{{ request.route_path('license', license=id) }}" class="help-link"
+     aria-label="{{ license_details[id].name }}">
+    {{ question_circle() }}
   </a>
 </span>
 {%- endmacro -%}
 
 {%- block content -%}
 <div class="row">
-  <div class="col-md-offset-1 col-md-10">
+  <div class="offset-lg-1 col-lg-10">
     {%- include 'requesthint.jinja2' -%}
   </div>
 </div>
 <div class="row">
-  <div class="col-md-offset-1 col-md-10">
+  <div class="offset-lg-1 col-lg-10">
     <p>
       {%- trans -%}
       What do I have to do for using or distributing a piece of open source software in accordance to specific open source license &mdash; as a modified or unmodified, embedded or independent application or library, used or distributed in the form of binaries or sources?

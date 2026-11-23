@@ -1,6 +1,6 @@
 OSCAd 2.0
-Copyright 2013 2014 Thomas Weißschuh, Amadeus IT Group
-Copyright 2013 2014 Kristian Schuhmacher, Amadeus IT Group
+Copyright 2013-2014 Thomas Weißschuh, Amadeus IT Group
+Copyright 2013-2026 Kristian Schuhmacher, Amadeus IT Group
 
 It is licensed under the GNU Affero General Public License version 3.
 You can find a copy of it in the file LICENSE in this distribution.
@@ -10,9 +10,10 @@ It contains several third party components.
 Author:                       Location:                   License copy:
 
 Babel Team                    oscad_i18n/__init__.py      LICENSE_BABEL
-German M. Bravo (Kronuz)      oscad/_scss.py              LICENSE_PYSCSS
-jQuery Foundation & Contribs. oscad/static/jquery/        LICENSE_JQUERY
-Twitter, Inc                  oscad/assets/scss/bootstrap LICENSE_BOOTSTRAP-SASS
+The Bootstrap Authors         oscad/static/bootstrap/     LICENSE_BOOTSTRAP
+                              oscad*/static/css/
+The Bootstrap Authors         oscad/templates/oscad/      LICENSE_BOOTSTRAP_ICONS
+                              icons.jinja2
 
 It is heavily based on its predecessor OSCAd which is licensed as follows:
 

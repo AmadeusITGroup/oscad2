@@ -1,13 +1,9 @@
 <div>
-  <script type="text/javascript"
-          src="{{ request.static_url('oscad:jquery/jquery-2.0.3.min.js') }}">
+  <script src="{{ request.static_url('oscad:static/bootstrap/js/bootstrap.bundle.min.js') }}">
   </script>
-  <script type="text/javascript"
-          src="{{ request.static_url('oscad:bootstrap/js/bootstrap.min.js') }}">
-  </script>
-  <script type="text/javascript">
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
+  <script>
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+      new bootstrap.Tooltip(el);
+    });
   </script>
 </div>
